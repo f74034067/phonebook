@@ -49,9 +49,18 @@ int main(int argc, char *argv[])
     e = pHead;
     e->pNext = NULL;
 
+#ifdef OPT
+    for(i = 0; i < MAX_TABLE_SIZE; i++) {
+        tableHead[i] = (entry *) malloc(sizeof(entry));
+        tableHead[i]->pNext = NULL;
+        tableCurrent[i] = tableHead[i];
+    }
+#endif
+
 #if defined(__GNUC__)
     __builtin___clear_cache((char *) pHead, (char *) pHead + sizeof(entry));
 #endif
+
     clock_gettime(CLOCK_REALTIME, &start);
     while (fgets(line, sizeof(line), fp)) {
         while (line[i] != '\0')
